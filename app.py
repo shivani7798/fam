@@ -53,7 +53,14 @@ st.markdown("""
 # -------------------------------
 # CONNECT TO GOOGLE SHEETS
 # -------------------------------
-gc = gspread.service_account(filename="creds.json")
+import streamlit as st
+import gspread
+from google.oauth2.service_account import Credentials
+
+creds_dict = st.secrets["gcp_service_account"]
+creds = Credentials.from_service_account_info(creds_dict)
+gc = gspread.authorize(creds)
+
 
 # Main incidents sheet
 sheet = gc.open("FamilyDiary").sheet1
